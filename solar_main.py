@@ -116,9 +116,10 @@ def main():
     physical_time = 0
 
     root = tkinter.Tk()
+
     # космическое пространство отображается на холсте типа Canvas
     space = tkinter.Canvas(root, width=window_width, height=window_height, bg="black")
-    space.pack(side=tkinter.TOP)
+
     # нижняя панель с кнопками
     frame = tkinter.Frame(root)
     frame.pack(side=tkinter.BOTTOM)
@@ -145,8 +146,11 @@ def main():
     time_label = tkinter.Label(frame, textvariable=displayed_time, width=30)
     time_label.pack(side=tkinter.RIGHT)
 
+    space.pack(side=tkinter.TOP)
+
     root.mainloop()
     print('Modelling finished!')
+
 
 if __name__ == "__main__":
     main()
