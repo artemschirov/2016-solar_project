@@ -12,7 +12,7 @@ header_font = "Arial-16"
 window_width = 800
 """Ширина окна"""
 
-window_height = 768
+window_height = 700
 """Высота окна"""
 
 scale_factor = None
@@ -39,7 +39,7 @@ def scale_x(x):
     **x** — x-координата модели.
     """
 
-    return int(x*scale_factor) + window_width//2
+    return int(x * scale_factor) + window_width // 2
 
 
 def scale_y(y):
@@ -106,13 +106,27 @@ def update_object_position(space, body):
     **space** — холст для рисования.
     **body** — тело, которое нужно переместить.
     """
+
     x = scale_x(body.x)
     y = scale_y(body.y)
     r = body.R
-    if x + r < 0 or x - r > window_width or y + r < 0 or y - r > window_height:
-        space.coords(body.image, window_width + r, window_height + r,
-                     window_width + 2*r, window_height + 2*r)  # положить за пределы окна
-    space.coords(body.image, x - r, y - r, x + r, y + r)
+    # print(f'x: {x}, y: {y}, r: {r}, body.x: {body.x}')
+
+    if x + r < 0 \
+            or x - r > window_width \
+            or y + r < 0 \
+            or y - r > window_height:
+        space.coords(body.image,
+                     window_width + r,
+                     window_height + r,
+                     window_width + 2*r,
+                     window_height + 2*r)  # положить за пределы окна
+
+    space.coords(body.image,
+                 x - r,
+                 y - r,
+                 x + r,
+                 y + r)
 
 
 if __name__ == "__main__":
