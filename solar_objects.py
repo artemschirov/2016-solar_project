@@ -1,5 +1,7 @@
 # coding: utf-8
 # license: GPLv3
+from solar_colors import COLORS
+from random import choice
 
 
 class Star:
@@ -21,7 +23,7 @@ class Star:
         self.Fx = 0  # Сила по оси **x**
         self.Fy = 0  # Сила по оси **y**
         self.R = 5  # Радиус звезды
-        self.color = "red"  # Цвет звезды
+        self.color = choice(COLORS)  # Цвет звезды
         self.image = None  # Изображение звезды
 
 
@@ -44,5 +46,5 @@ class Planet:
         self.Fx = 0  # Сила по оси **x**
         self.Fy = 0  # Сила по оси **y**
         self.R = 5  # Радиус планеты
-        self.color = "green"  # Цвет планеты
+        self.color = choice(COLORS)  # Цвет планеты
         self.image = None  # Изображение планеты

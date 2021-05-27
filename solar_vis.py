@@ -5,6 +5,8 @@
 Нигде, кроме этого модуля, не используются экранные координаты объектов.
 Функции, создающие графические объекты и перемещающие их на экране, принимают физические координаты
 """
+from solar_colors import COLORS
+from random import choice, randint as rnd
 
 header_font = "Arial-16"
 """Шрифт в заголовке"""
@@ -12,7 +14,7 @@ header_font = "Arial-16"
 window_width = 800
 """Ширина окна"""
 
-window_height = 700
+window_height = 670
 """Высота окна"""
 
 scale_factor = None
@@ -24,7 +26,7 @@ scale_factor = None
 def calculate_scale_factor(max_distance):
     """Вычисляет значение глобальной переменной **scale_factor** по данной характерной длине"""
     global scale_factor
-    scale_factor = 0.4*min(window_height, window_width)/max_distance
+    scale_factor = 0.4 * min(window_height, window_width) / max_distance  # default: 0.4
     print('Scale factor:', scale_factor)
 
 
@@ -95,7 +97,7 @@ def update_system_name(space, system_name):
     **space** — холст для рисования.
     **system_name** — название системы тел.
     """
-    space.create_text(30, 80, tag="header", text=system_name, font=header_font)
+    space.create_text(30, 80, tag="header", text=system_name, font=header_font, fill='white')
 
 
 def update_object_position(space, body):
@@ -110,7 +112,6 @@ def update_object_position(space, body):
     x = scale_x(body.x)
     y = scale_y(body.y)
     r = body.R
-    # print(f'x: {x}, y: {y}, r: {r}, body.x: {body.x}')
 
     if x + r < 0 \
             or x - r > window_width \
@@ -119,14 +120,30 @@ def update_object_position(space, body):
         space.coords(body.image,
                      window_width + r,
                      window_height + r,
-                     window_width + 2*r,
-                     window_height + 2*r)  # положить за пределы окна
+                     window_width + 2 * r,
+                     window_height + 2 * r)  # положить за пределы окна
 
     space.coords(body.image,
                  x - r,
                  y - r,
                  x + r,
                  y + r)
+
+
+def draw_background_stars(canvas: 'tkinter.Canvas'):
+    """
+    Draw pixels (mean "stars) on window screen
+    with random parameters: x, y, color.
+    stars_num = number of new pixels on canvas
+    :canvas: place to draw new stars
+    """
+    print(type(canvas), type(1))
+    stars_num = int(window_width * window_height * 0.000525)
+    for pixel in range(stars_num):
+        x = rnd(0, window_width)
+        y = rnd(0, window_height)
+        color = choice(COLORS)
+        canvas.create_line(x, y, x + 1, y, fill=color)
 
 
 if __name__ == "__main__":

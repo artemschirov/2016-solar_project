@@ -11,6 +11,8 @@ perform_execution = False
 """Флаг цикличности выполнения расчёта"""
 
 physical_time = 0
+physical_days = 0
+physical_year = 0
 """Физическое время от начала расчёта.
 Тип: float"""
 
@@ -32,16 +34,25 @@ def execution():
     Цикличность выполнения зависит от значения глобальной переменной perform_execution.
     При perform_execution == True функция запрашивает вызов самой себя по таймеру через от 1 мс до 100 мс.
     """
-    global physical_time
-    global displayed_time
+    global displayed_time, \
+        physical_time, \
+        physical_days, \
+        physical_year
 
     recalculate_space_objects_positions(space_objects, time_step.get())
 
     for body in space_objects:
         update_object_position(space, body)
+        update_system_name(space, body)
 
     physical_time += time_step.get()
-    displayed_time.set("%.1f" % physical_time + " seconds gone")
+    physical_days = physical_time // 86400
+    if physical_days >= 364:
+        physical_time = 0
+        physical_days = 0
+        physical_year += 1
+
+    displayed_time.set(f"{int(physical_year)} y. {int(physical_days)} days gone")
 
     if perform_execution:
         space.after(101 - int(time_speed.get()), execution)
@@ -81,7 +92,7 @@ def open_file_dialog():
     perform_execution = False
     for obj in space_objects:
         space.delete(obj.image)  # удаление старых изображений планет
-    in_filename = askopenfilename(filetypes=(("Text file", ".txt"),))
+    in_filename = askopenfilename(filetypes=(("Text file", ".txt"), ), initialfile="solar_system.txt")
     space_objects = read_space_objects_data_from_file(in_filename)
     max_distance = max([max(abs(obj.x), abs(obj.y)) for obj in space_objects])
     calculate_scale_factor(max_distance)
@@ -108,12 +119,12 @@ def main():
     """Главная функция главного модуля.
     Создаёт объекты графического дизайна библиотеки tkinter: окно, холст, фрейм с кнопками, кнопки.
     """
-    global physical_time
-    global displayed_time
-    global time_step
-    global time_speed
-    global space
-    global start_button
+    global physical_time, \
+        displayed_time, \
+        start_button, \
+        time_speed, \
+        time_step, \
+        space
 
     print('Modelling started!')
     physical_time = 0
@@ -131,11 +142,12 @@ def main():
     start_button.pack(side=tkinter.LEFT)
 
     time_step = tkinter.DoubleVar()
-    time_step.set(1)
+    time_step.set(100000)
     time_step_entry = tkinter.Entry(frame, textvariable=time_step)
     time_step_entry.pack(side=tkinter.LEFT)
 
     time_speed = tkinter.DoubleVar()
+    time_speed.set(50)
     scale = tkinter.Scale(frame, variable=time_speed, orient=tkinter.HORIZONTAL)
     scale.pack(side=tkinter.LEFT)
 
@@ -149,6 +161,8 @@ def main():
     time_label = tkinter.Label(frame, textvariable=displayed_time, width=30)
     time_label.pack(side=tkinter.RIGHT)
 
+    draw_background_stars(space)
+    update_system_name(space, 'test')
     space.pack(side=tkinter.TOP)
 
     root.mainloop()
