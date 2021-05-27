@@ -47,12 +47,16 @@ def execution():
 
     physical_time += time_step.get()
     physical_days = physical_time // 86400
+
     if physical_days >= 364:
         physical_time = 0
         physical_days = 0
         physical_year += 1
 
-    displayed_time.set(f"{int(physical_year)} y. {int(physical_days)} days gone")
+    if physical_year > 0:
+        displayed_time.set(f"{int(physical_year)} y. {int(physical_days)} days gone")
+    else:
+        displayed_time.set(f"{int(physical_days)} days gone")
 
     if perform_execution:
         space.after(101 - int(time_speed.get()), execution)
@@ -119,8 +123,10 @@ def main():
     """Главная функция главного модуля.
     Создаёт объекты графического дизайна библиотеки tkinter: окно, холст, фрейм с кнопками, кнопки.
     """
-    global physical_time, \
-        displayed_time, \
+    global displayed_time, \
+        physical_time, \
+        physical_year, \
+        physical_days, \
         start_button, \
         time_speed, \
         time_step, \
@@ -128,6 +134,8 @@ def main():
 
     print('Modelling started!')
     physical_time = 0
+    physical_year = 0
+    physical_days = 0
 
     root = tkinter.Tk()
 
