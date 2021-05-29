@@ -11,8 +11,7 @@ from random import choice, randint as rnd
 header_font = "Arial-16"
 """Шрифт в заголовке"""
 
-window_width = 800
-"""Ширина окна"""
+window_width = 800  # Ширина окна
 
 window_height = 670
 """Высота окна"""
