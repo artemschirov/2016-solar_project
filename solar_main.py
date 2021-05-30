@@ -54,7 +54,7 @@ def execution():
         physical_year += 1
 
     if physical_year > 0:
-        displayed_time.set(f"{int(physical_year)} y. {int(physical_days)} days gone")
+        displayed_time.set(f"{int(physical_year)} y. {int(physical_days)} d. gone")
     else:
         displayed_time.set(f"{int(physical_days)} days gone")
 
@@ -111,7 +111,8 @@ def open_file_dialog():
 
 
 def save_file_dialog():
-    """Открывает диалоговое окно выбора имени файла и вызывает
+    """
+    Открывает диалоговое окно выбора имени файла и вызывает
     функцию считывания параметров системы небесных тел из данного файла.
     Считанные объекты сохраняются в глобальный список space_objects
     """
@@ -165,12 +166,12 @@ def main():
     save_file_button.pack(side=tkinter.LEFT)
 
     displayed_time = tkinter.StringVar()
-    displayed_time.set(str(physical_time) + " seconds gone")
+    displayed_time.set(str(physical_time) + " days gone")
     time_label = tkinter.Label(frame, textvariable=displayed_time, width=30)
     time_label.pack(side=tkinter.RIGHT)
 
     draw_background_stars(space)
-    update_system_name(space, 'test')
+    # update_system_name(space, 'test')
     space.pack(side=tkinter.TOP)
 
     root.mainloop()

@@ -74,3 +74,20 @@ COLORS = ['snow', 'ghost white', 'white smoke', 'gainsboro', 'floral white', 'ol
           'gray75', 'gray76', 'gray77', 'gray78', 'gray79', 'gray80', 'gray81', 'gray82', 'gray83',
           'gray84', 'gray85', 'gray86', 'gray87', 'gray88', 'gray89', 'gray90', 'gray91', 'gray92',
           'gray93', 'gray94', 'gray95', 'gray97', 'gray98', 'gray99']
+
+
+# Uncomment for open window with all COLORS
+# root = Tk()
+# root.title("Named colour chart")
+# row = 0
+# col = 0
+# for color in COLORS:
+#     e = Label(root, text=color, background=color,
+#               font=(None, -FONT_SIZE))
+#     e.grid(row=row, column=col, sticky=E + W)
+#     row += 1
+#     if row > 36:
+#         row = 0
+#         col += 1
+#
+# root.mainloop()

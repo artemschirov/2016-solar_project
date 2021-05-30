@@ -131,13 +131,13 @@ def update_object_position(space, body):
 
 def draw_background_stars(canvas: 'tkinter.Canvas'):
     """
-    Draw pixels (mean "stars) on window screen
+    Draw pixels (mean "stars") on window screen
     with random parameters: x, y, color.
     stars_num = number of new pixels on canvas
     :canvas: place to draw new stars
     """
-    print(type(canvas), type(1))
     stars_num = int(window_width * window_height * 0.000525)
+
     for pixel in range(stars_num):
         x = rnd(0, window_width)
         y = rnd(0, window_height)
